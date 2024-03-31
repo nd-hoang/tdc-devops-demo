@@ -40,7 +40,7 @@ app.get('/banners', (req, res) => {
         {
             title: "Makeup <br />Kit 2",
             description: "Ncididunt 2 ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo",
-            image: "/images/banner-img.png"
+            image: "/images/img-1.png"
         },
         {
             title: "Makeup <br />Kit 3",
