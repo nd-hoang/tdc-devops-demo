@@ -1,10 +1,17 @@
-const express = require('express');
-const cors = require('cors');
+const express = require('express'); // npm install express
+const cors = require('cors'); // npm install cors
 const app = express();
 const port = process.env.PORT || 3000;
 
+const CORS_WHITELIST = [
+    "http://localhost:3000",
+    "http://localhost:3002",
+    "http://localhost:3006",
+];
+
 const corsOptions = {
-    origin: 'http://localhost:3000',
+    // origin: "*", // Accept all origins => Development
+    origin: CORS_WHITELIST, // Accept origins in whitelist => Production
     optionsSuccessStatus: 200
 };
 
