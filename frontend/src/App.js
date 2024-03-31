@@ -1,8 +1,20 @@
 import './App.css';
+import { useEffect } from 'react';
 import Header from './components/Header';
 import Banner from './components/Banner';
 
-function App() {
+function App(props) {
+  // React Hook
+  useEffect(() => {
+    fetch("http://localhost:3003/banners").then((res) => {
+      return res.json();
+    }).then((data) => {
+      console.log(data);
+    }).catch((err) => {
+      console.log(err);
+    });
+  }, []);
+
   return (
     <div className="App">
       <Header />

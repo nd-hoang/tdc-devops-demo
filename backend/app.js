@@ -1,6 +1,14 @@
 const express = require('express');
+const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 3000;
+
+const corsOptions = {
+    origin: 'http://localhost:3000',
+    optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions));
 
 app.get('/', (req, res) => {
     res.send({
