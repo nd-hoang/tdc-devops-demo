@@ -1,13 +1,18 @@
 server {
-        listen 80;
-        listen [::]:80;
+    listen 80;
+    listen [::]:80;
 
-        root /vagrant/html;
-        index index.html;
+    root /vagrant/html;
+    index index.html;
 
-        server_name _;
+    server_name _;
 
-        location / {
-                try_files $uri $uri/ =404;
-        }
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    # Forward: /api/{...} => http://localhost:3000/{...}
+    location /api/ {
+        proxy_pass http://localhost:3000/;
+    }
 }
