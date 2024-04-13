@@ -11,8 +11,13 @@ server {
         try_files $uri $uri/ =404;
     }
 
-    # Forward: /api/{...} => http://localhost:3000/{...}
+    # Forward to pm2: /api/{...} => http://localhost:3000/{...}
+    #location /api/ {
+    #    proxy_pass http://localhost:3000/;
+    #}
+
+    # Forward to docker: /api/{...} => http://localhost:8080/{...}
     location /api/ {
-        proxy_pass http://localhost:3000/;
+        proxy_pass http://localhost:8080/;
     }
 }
