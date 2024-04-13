@@ -25,3 +25,6 @@ docker rm -f devops-backend
 
 # Clean up disk
 docker image prune -a
+
+# Show log of a container
+docker logs devops-backend
