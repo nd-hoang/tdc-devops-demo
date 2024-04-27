@@ -1,3 +1,5 @@
 # tdc-devops-demo
 
-Hello, I'm Hoang, TDC, World
+### Week 08: Connect to MySQL Database
+
+See documentation [here](guide/GuideWeek08.md)

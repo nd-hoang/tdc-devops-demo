@@ -1,7 +1,13 @@
 const express = require('express'); // npm install express
 const cors = require('cors'); // npm install cors
 const app = express();
+const db = require('mysql2');
 const port = process.env.PORT || 3000;
+const dbHost = process.env.DB_HOST || 'localhost';
+const dbPort = process.env.DB_PORT || '3306';
+const dbUser = process.env.DB_USER || 'admin';
+const dbPass = process.env.DB_PASS || 'admin';
+const dbName = process.env.DB_NAME || 'tdc-devops';
 
 const CORS_WHITELIST = [
     "http://localhost:3000",
@@ -14,6 +20,19 @@ const corsOptions = {
     origin: CORS_WHITELIST, // Accept origins in whitelist => Production
     optionsSuccessStatus: 200
 };
+
+const connection = db.createConnection({
+  host: dbHost,
+  port: dbPort,
+  user: dbUser,
+  password: dbPass,
+  database: dbName
+});
+
+connection.connect(function(err) {
+  if (err) throw err;
+  console.log(`DB Connected! ${dbHost}:${dbPort}/${dbName} with User: ${dbUser}`);
+});
 
 app.use(cors(corsOptions));
 
@@ -31,24 +50,18 @@ app.get('/health', (req, res) => {
 });
 
 app.get('/banners', (req, res) => {
-    const banners = [
-        {
-            title: "Makeup <br />Kit 1",
-            description: "Ncididunt 1 ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo",
-            image: "/images/banner-img.png"
-        },
-        {
-            title: "Makeup <br />Kit 2",
-            description: "Ncididunt 2 ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo",
-            image: "/images/img-1.png"
-        },
-        {
-            title: "Makeup <br />Kit 3",
-            description: "Ncididunt 3 ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo",
-            image: "/images/banner-img.png"
-        }
-    ];
-    res.send(banners);
+    connection.query('SELECT * FROM banners', (err, rows) => {
+        if (err) throw err;
+        // Mapping dữ liệu trả về từ DB table => Response model
+        const banners = rows.map(row => {
+            return {
+                title: row.title,
+                description: row.description,
+                image: row.image
+            };
+        });
+        res.send(banners);
+    });
 });
 
 app.listen(port, () => {
