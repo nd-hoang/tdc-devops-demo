@@ -69,7 +69,7 @@ mysql>
 Thực hiện câu lệnh SQL:
 
 ```
-USE tdc-devops;
+USE `tdc-devops`;
 ```
 
 Thực hiện câu lệnh SQL:
