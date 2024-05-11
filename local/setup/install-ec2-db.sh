@@ -16,7 +16,13 @@ echo \
 sudo apt-get update
 sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
-# Run docker container API
-sudo docker run -d --restart=always --name=devops-backend -p 0.0.0.0:80:3000 hoangdntdc/devops-demo-backend
+# Run docker container DB
+docker volume create --driver local devops-db-volume
 
-# GET http://<public_id>/banners
+docker run -d --name devops-db -p 3306:3306 \
+    -v devops-db-volume:/var/lib/mysql \
+    -e MYSQL_ROOT_PASSWORD="root12345" \
+    -e MYSQL_USER="admin" \
+    -e MYSQL_PASSWORD="admin" \
+    -e MYSQL_DATABASE="tdc-devops" \
+    mysql:8.0
